@@ -1,0 +1,269 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "REST API zur Bereitstellung von AvaL Stammdaten",
+    "version": "1.2.23 (21.03.2022 11:11 UTC)",
+    "title": "AvaL Stammdaten REST API",
+    "contact": {
+      "name": "AvaL Standard",
+      "url": "https://www.avalstandard.de",
+      "email": "info@avalstandard.de"
+    }
+  },
+  "host": "www.avalstandard.de",
+  "basePath": "/aval-stammdaten-webapi",
+  "tags": [
+    {
+      "name": "CatalogController",
+      "description": "Controller zur Abfrage der AvaL Stammdaten Kataloge"
+    }
+  ],
+  "paths": {
+    "/catalog": {},
+    "/catalog/{avalTagAndVersion}/entries": {},
+    "/catalog/{avalTagAndVersion}/structure": {}
+  },
+  "definitions": {
+    "Catalog": {},
+    "CatalogDTO": {},
+    "CatalogData": {},
+    "CatalogDataProjection": {},
+    "CatalogEntry": {},
+    "CatalogEntryDTO": {},
+    "CatalogEntryData": {
+      "type": "object",
+      "properties": {
+        "catalogData": {
+          "$ref": "#/definitions/CatalogData"
+        },
+        "catalogDataId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "catalogEntry": {
+          "$ref": "#/definitions/CatalogEntry"
+        },
+        "catalogEntryId": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "CatalogEntryData"
+    },
+    "CatalogPart": {
+      "type": "object",
+      "properties": {
+        "catalog": {
+          "$ref": "#/definitions/Catalog"
+        },
+        "catalogData": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CatalogData"
+          }
+        },
+        "description": {
+          "type": "string"
+        },
+        "firstUser": {
+          "type": "string"
+        },
+        "firstUserId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "firstdate": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "lastUser": {
+          "type": "string"
+        },
+        "lastUserId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pos": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "subDataMark": {
+          "type": "boolean"
+        },
+        "subParts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CatalogSubPart"
+          }
+        },
+        "timestamp": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "version": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "CatalogPart"
+    },
+    "CatalogPartDTOForData": {
+      "type": "object",
+      "properties": {
+        "catalogData": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CatalogDataProjection"
+          }
+        },
+        "description": {
+          "type": "string"
+        },
+        "hasSubData": {
+          "type": "boolean"
+        },
+        "pos": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "subParts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CatalogSubPartDTOForData"
+          }
+        }
+      },
+      "title": "CatalogPartDTOForData"
+    },
+    "CatalogSubPart": {
+      "type": "object",
+      "properties": {
+        "catalogData": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CatalogData"
+          }
+        },
+        "catalogPart": {
+          "$ref": "#/definitions/CatalogPart"
+        },
+        "description": {
+          "type": "string"
+        },
+        "firstUser": {
+          "type": "string"
+        },
+        "firstUserId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "firstdate": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "lastUser": {
+          "type": "string"
+        },
+        "lastUserId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pos": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "timestamp": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "version": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "CatalogSubPart"
+    },
+    "CatalogSubPartDTOForData": {
+      "type": "object",
+      "properties": {
+        "catalogData": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CatalogDataProjection"
+          }
+        },
+        "description": {
+          "type": "string"
+        },
+        "pos": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "CatalogSubPartDTOForData"
+    },
+    "DatatablePageResult«CatalogPart»": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CatalogPart"
+          }
+        },
+        "draw": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "page": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pageWithRecord": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "pages": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "recordsFiltered": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "recordsTotal": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "size": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "DatatablePageResult«CatalogPart»"
+    },
+    "ValidationInfo": {
+      "type": "object",
+      "properties": {
+        "mapFieldValidator": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "title": "ValidationInfo"
+    }
+  }
+}
