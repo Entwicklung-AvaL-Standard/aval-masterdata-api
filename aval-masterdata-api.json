@@ -19,17 +19,383 @@
     }
   ],
   "paths": {
-    "/catalog": {},
-    "/catalog/{avalTagAndVersion}/entries": {},
-    "/catalog/{avalTagAndVersion}/structure": {}
+    "/catalog": {
+      "get": {
+        "tags": [
+          "CatalogController"
+        ],
+        "summary": "Liste aller verfügbaren AvaL Stammdaten Kataloge",
+        "operationId": "getCatalogsUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CatalogDTO"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/catalog/{avalTagAndVersion}/entries": {
+      "get": {
+        "tags": [
+          "CatalogController"
+        ],
+        "summary": "Vorhandene Einträge des gegebenen AvaL Stamdaten Kataloges",
+        "operationId": "getEntriesUsingGET_1",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "avalTagAndVersion",
+            "in": "path",
+            "description": "avalTagAndVersion",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CatalogEntryDTO"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/catalog/{avalTagAndVersion}/structure": {
+      "get": {
+        "tags": [
+          "CatalogController"
+        ],
+        "summary": "Mögliche Daten des gegebenen AvaL Stamdaten Kataloges",
+        "operationId": "getStructureAndDataUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "avalTagAndVersion",
+            "in": "path",
+            "description": "avalTagAndVersion",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CatalogPartDTOForData"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    }
   },
   "definitions": {
-    "Catalog": {},
-    "CatalogDTO": {},
-    "CatalogData": {},
-    "CatalogDataProjection": {},
-    "CatalogEntry": {},
-    "CatalogEntryDTO": {},
+    "Catalog": {
+      "type": "object",
+      "properties": {
+        "avalTag": {
+          "type": "string"
+        },
+        "catalogVersion": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "description": {
+          "type": "string"
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CatalogEntry"
+          }
+        },
+        "firstUser": {
+          "type": "string"
+        },
+        "firstUserId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "firstdate": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "lastUser": {
+          "type": "string"
+        },
+        "lastUserId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "parts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CatalogPart"
+          }
+        },
+        "timestamp": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "validFrom": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "validTo": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "version": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Catalog"
+    },
+    "CatalogDTO": {
+      "type": "object",
+      "properties": {
+        "avalTag": {
+          "type": "string"
+        },
+        "avalTagAndVersion": {
+          "type": "string"
+        },
+        "catalogVersion": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "description": {
+          "type": "string"
+        },
+        "lastEntryUpdate": {
+          "type": "string",
+          "example": "yyyy-MM-dd HH:mm:ss z"
+        },
+        "lastStructureUpdate": {
+          "type": "string",
+          "example": "yyyy-MM-dd HH:mm:ss z"
+        },
+        "numberOfEntries": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "numberOfParts": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "validFrom": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "validTo": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "title": "CatalogDTO"
+    },
+    "CatalogData": {
+      "type": "object",
+      "properties": {
+        "avalIdPart": {
+          "type": "string"
+        },
+        "catalogPart": {
+          "$ref": "#/definitions/CatalogPart"
+        },
+        "catalogSubPart": {
+          "$ref": "#/definitions/CatalogSubPart"
+        },
+        "description": {
+          "type": "string"
+        },
+        "firstUser": {
+          "type": "string"
+        },
+        "firstUserId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "firstdate": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "lastUser": {
+          "type": "string"
+        },
+        "lastUserId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "timestamp": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "version": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "CatalogData"
+    },
+    "CatalogDataProjection": {
+      "type": "object",
+      "properties": {
+        "avalIdPart": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "title": "CatalogDataProjection"
+    },
+    "CatalogEntry": {
+      "type": "object",
+      "properties": {
+        "avalId": {
+          "type": "string"
+        },
+        "avalIdSuffix": {
+          "type": "string"
+        },
+        "catalog": {
+          "$ref": "#/definitions/Catalog"
+        },
+        "description": {
+          "type": "string"
+        },
+        "entryData": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CatalogEntryData"
+          }
+        },
+        "firstUser": {
+          "type": "string"
+        },
+        "firstUserId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "firstdate": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "lastUser": {
+          "type": "string"
+        },
+        "lastUserId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "nextEntry": {
+          "$ref": "#/definitions/CatalogEntry"
+        },
+        "optionalDescription": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "validFrom": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "validTo": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "version": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "CatalogEntry"
+    },
+    "CatalogEntryDTO": {
+      "type": "object",
+      "properties": {
+        "avalId": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "lastUpdate": {
+          "type": "string",
+          "example": "yyyy-MM-dd HH:mm:ss z"
+        },
+        "validFrom": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "validTo": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "title": "CatalogEntryDTO"
+    },
     "CatalogEntryData": {
       "type": "object",
       "properties": {
