@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "description": "REST API zur Bereitstellung von AvaL Stammdaten",
-    "version": "1.2.23 (21.03.2022 11:11 UTC)",
+    "version": "1.2.24 (19.12.2022 09:40 UTC)",
     "title": "AvaL Stammdaten REST API",
     "contact": {
       "name": "AvaL Standard",
@@ -16,6 +16,10 @@
     {
       "name": "CatalogController",
       "description": "Controller zur Abfrage der AvaL Stammdaten Kataloge"
+    },
+    {
+      "name": "nummernkreis-controller",
+      "description": "Nummernkreis Controller"
     }
   ],
   "paths": {
@@ -119,6 +123,240 @@
               "items": {
                 "$ref": "#/definitions/CatalogPartDTOForData"
               }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/nummernkreis": {
+      "get": {
+        "tags": [
+          "nummernkreis-controller"
+        ],
+        "summary": "getNummernkreis",
+        "operationId": "getNummernkreisUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "fetchMode",
+            "in": "query",
+            "description": "fetchMode",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "DEFAULT",
+              "EAGER",
+              "LIST"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Nummernkreis"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "nummernkreis-controller"
+        ],
+        "summary": "postNummernkreis",
+        "operationId": "postNummernkreisUsingPOST",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "nummernkreis",
+            "description": "nummernkreis",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Nummernkreis"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Nummernkreis"
+            }
+          },
+          "201": {
+            "description": "Created"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/nummernkreis/exists": {
+      "get": {
+        "tags": [
+          "nummernkreis-controller"
+        ],
+        "summary": "nummernkreisExists",
+        "operationId": "nummernkreisExistsUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "kennzVerw",
+            "in": "query",
+            "description": "kennzVerw",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/nummernkreis/nextnumber": {
+      "get": {
+        "tags": [
+          "nummernkreis-controller"
+        ],
+        "summary": "getNextNumber",
+        "operationId": "getNextNumberUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "kennzVerw",
+            "in": "query",
+            "description": "kennzVerw",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/nummernkreis/validation/": {
+      "get": {
+        "tags": [
+          "nummernkreis-controller"
+        ],
+        "summary": "getNummernkreisValidation",
+        "operationId": "getNummernkreisValidationUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/ValidationInfo"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/nummernkreis/{id}": {
+      "get": {
+        "tags": [
+          "nummernkreis-controller"
+        ],
+        "summary": "getNummernkreisById",
+        "operationId": "getNummernkreisByIdUsingGET",
+        "produces": [
+          "*/*"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Nummernkreis"
             }
           },
           "401": {
@@ -576,6 +814,10 @@
       },
       "title": "CatalogSubPartDTOForData"
     },
+    "Character": {
+      "type": "object",
+      "title": "Character"
+    },
     "DatatablePageResult«CatalogPart»": {
       "type": "object",
       "properties": {
@@ -615,6 +857,68 @@
         }
       },
       "title": "DatatablePageResult«CatalogPart»"
+    },
+    "Nummernkreis": {
+      "type": "object",
+      "properties": {
+        "anzStellen": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "firstUser": {
+          "type": "string"
+        },
+        "firstUserId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "firstdate": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "genNummer": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "kennzVerw": {
+          "$ref": "#/definitions/Character"
+        },
+        "konstante": {
+          "type": "string"
+        },
+        "lastUser": {
+          "type": "string"
+        },
+        "lastUserId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "mandantId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "timestamp": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "variableVon": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "version": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "vertragsgebietId": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "title": "Nummernkreis"
     },
     "ValidationInfo": {
       "type": "object",
